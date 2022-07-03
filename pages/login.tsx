@@ -1,26 +1,34 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { FormEventHandler } from 'react'
 
 const Login: NextPage = () => {
+  const { replace } = useRouter()
+
   const onFormSubmit: FormEventHandler<HTMLFormElement> = async ev => {
     ev.preventDefault()
 
     const formData = new FormData(ev.currentTarget)
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_XPEND_API_URL}/auth/login`,
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          email: formData.get('email'),
-          password: formData.get('password'),
-        }),
-        headers: [['Content-Type', 'application/json']],
-      }
-    )
-    const data = await res.json()
-    localStorage.setItem('jwt', data.token)
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_XPEND_API_URL}/auth/login`,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            email: formData.get('email'),
+            password: formData.get('password'),
+          }),
+          headers: [['Content-Type', 'application/json']],
+        }
+      )
+      const data = await res.json()
+      localStorage.setItem('jwt', data.token)
+      replace('/checkouts')
+    } catch (e) {
+      alert('Something went wrong' + JSON.stringify(e))
+    }
   }
 
   return (
