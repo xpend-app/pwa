@@ -23,11 +23,16 @@ const Login: NextPage = () => {
           headers: [['Content-Type', 'application/json']],
         }
       )
+
+      if (!res.ok) throw new Error(res.statusText)
+
       const data = await res.json()
       localStorage.setItem('jwt', data.token)
-      replace('/checkouts')
+      replace('/')
     } catch (e) {
-      alert('Something went wrong' + JSON.stringify(e))
+      if (e instanceof Error)
+        alert('Something went wrong' + JSON.stringify(e.message))
+      else alert('Something went wrong' + JSON.stringify(e))
     }
   }
 

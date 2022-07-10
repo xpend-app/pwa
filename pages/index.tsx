@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 
@@ -38,7 +39,10 @@ const Home: NextPage = () => {
 
         {data?.map((checkout: any) => (
           <div key={checkout.id}>
-            {checkout.id} - {checkout.merchantId}
+            <Link href={`/checkouts/${checkout.id}`}>
+              <a>{checkout.id}</a>
+            </Link>{' '}
+            - {checkout.currentReceivingAddresses[0].address}
           </div>
         ))}
       </form>
