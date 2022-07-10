@@ -15,7 +15,7 @@ const Checkout: NextPage = () => {
   const { data, mutate } = useSWR(`/checkouts/${checkoutId}`)
 
   useEffect(() => {
-    const ws = new WebSocket(`${process.env.NEXT_PUBLIC_XPEND_WS_URL}/ws`)
+    const ws = new WebSocket(`${process.env.NEXT_PUBLIC_XPEND_WS_URL}`)
 
     ws.onopen = () => {
       console.log('Connected')

@@ -42,7 +42,6 @@ const useLocalJwt = (
           const { sub, ...userData } = decode(newToken) as JwtPayload
           setData({ userData: { ...userData, id: sub }, checked: true })
           localStorage.setItem('jwt', newToken)
-          console.log('done')
         } catch {
           console.log('faile')
           setData({ userData: undefined, checked: true })
